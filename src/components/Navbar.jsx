@@ -30,8 +30,8 @@ const Navbar = () => {
             <NavLink to='/' className={navLinkClass}>Home</NavLink>
             <NavLink to='/jobs' className={navLinkClass}>Jobs</NavLink>
             <NavLink to='/news' className={navLinkClass}>News</NavLink>
-            <li className="cursor-pointer hover:text-blue-600">Resources</li>
-            <li className="cursor-pointer hover:text-blue-600">Contact</li>
+            {/* <li className="cursor-pointer hover:text-blue-600">Resources</li>
+            <li className="cursor-pointer hover:text-blue-600">Contact</li> */}
             {admin && (
               <NavLink to='/admin/dashboard' className={navLinkClass}>
                 🏛️ Dashboard

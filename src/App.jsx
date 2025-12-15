@@ -12,6 +12,8 @@ import AdminLogin from './pages/AdminLogin'
 import AdminDashboard from './pages/AdminDashboard'
 import CreateJob from './pages/CreateJob'
 import CreateNews from './pages/CreateNews'
+import EditJob from './pages/EditJob'
+import EditNews from './pages/EditNews'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import { AuthProvider } from './context/AuthContext'
@@ -24,7 +26,9 @@ function App() {
         <Route path='/admin/login' element={<AdminLogin />} />
         <Route path='/admin/dashboard' element={<AdminDashboard />} />
         <Route path='/admin/create-job' element={<CreateJob />} />
+        <Route path='/admin/edit-job/:id' element={<EditJob />} />
         <Route path='/admin/create-news' element={<CreateNews />} />
+        <Route path='/admin/edit-news/:id' element={<EditNews />} />
         <Route path='/*' element={
           <>
             <Navbar />

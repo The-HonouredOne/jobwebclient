@@ -104,11 +104,11 @@ const NewsDetails = () => {
           <SocialJoinBox />
 
           {/* DISCLAIMER */}
-          <div className="bg-yellow-50 p-4 rounded text-xs text-gray-700 border border-yellow-200">
+          {/* <div className="bg-yellow-50 p-4 rounded text-xs text-gray-700 border border-yellow-200">
             <strong>Disclaimer:</strong>  
             This news is published for informational purposes only.  
             Candidates are advised to verify details from the official website.
-          </div>
+          </div> */}
 
         </div>
       </div>

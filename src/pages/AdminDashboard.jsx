@@ -17,7 +17,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     if (authLoading) return; // Wait for auth to load
-    
+
     if (!admin) {
       navigate('/admin/login');
       return;
@@ -48,6 +48,40 @@ const AdminDashboard = () => {
   const handleLogout = () => {
     logout();
     navigate('/');
+  };
+
+  const handleDeleteJob = async (jobId) => {
+    if (window.confirm('Are you sure you want to delete this job?')) {
+      try {
+        await axios.delete(`http://localhost:8080/api/jobs/${jobId}`);
+        setJobs(jobs.filter(job => job._id !== jobId));
+        setTotalJobs(totalJobs - 1);
+      } catch (error) {
+        console.error('Error deleting job:', error);
+        alert('Error deleting job');
+      }
+    }
+  };
+
+  const handleDeleteNews = async (newsId) => {
+    if (window.confirm('Are you sure you want to delete this news?')) {
+      try {
+        await axios.delete(`http://localhost:8080/api/news/${newsId}`);
+        setNews(news.filter(article => article._id !== newsId));
+        setTotalNews(totalNews - 1);
+      } catch (error) {
+        console.error('Error deleting news:', error);
+        alert('Error deleting news');
+      }
+    }
+  };
+
+  const handleEditJob = (jobId) => {
+    navigate(`/admin/edit-job/${jobId}`);
+  };
+
+  const handleEditNews = (newsId) => {
+    navigate(`/admin/edit-news/${newsId}`);
   };
 
   if (authLoading) {
@@ -84,7 +118,7 @@ const AdminDashboard = () => {
       <div className="bg-white shadow rounded-lg">
         <div className="px-4 lg:px-6 py-4 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <h3 className="text-lg font-medium text-gray-900">All Jobs</h3>
-          <button 
+          <button
             onClick={() => navigate('/admin/create-job')}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm w-full sm:w-auto"
           >
@@ -122,18 +156,27 @@ const AdminDashboard = () => {
                       {job.totalVacancies}
                     </td>
                     <td className="px-3 lg:px-6 py-4">
-                      <span className={`px-2 py-1 text-xs rounded-full ${
-                        job.status === 'Active' 
-                          ? 'bg-green-100 text-green-800' 
+                      <span className={`px-2 py-1 text-xs rounded-full ${job.status === 'Active'
+                          ? 'bg-green-100 text-green-800'
                           : 'bg-red-100 text-red-800'
-                      }`}>
+                        }`}>
                         {job.status}
                       </span>
                     </td>
                     <td className="px-3 lg:px-6 py-4 text-xs font-medium">
                       <div className="flex flex-col lg:flex-row gap-1 lg:gap-3">
-                        <button className="text-blue-600 hover:text-blue-900">Edit</button>
-                        <button className="text-red-600 hover:text-red-900">Delete</button>
+                        <button
+                          onClick={() => handleEditJob(job._id)}
+                          className="text-blue-600 hover:text-blue-900"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDeleteJob(job._id)}
+                          className="text-red-600 hover:text-red-900"
+                        >
+                          Delete
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -142,7 +185,7 @@ const AdminDashboard = () => {
             </table>
           )}
         </div>
-        
+
         {/* Pagination */}
         {totalPages > 1 && (
           <div className="flex justify-center mt-4 px-6 pb-4">
@@ -154,24 +197,23 @@ const AdminDashboard = () => {
               >
                 Previous
               </button>
-              
+
               {[...Array(totalPages)].map((_, index) => {
                 const page = index + 1;
                 return (
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
-                    className={`px-3 py-1 border rounded text-sm ${
-                      currentPage === page
+                    className={`px-3 py-1 border rounded text-sm ${currentPage === page
                         ? 'bg-blue-600 text-white border-blue-600'
                         : 'border-gray-300 hover:bg-gray-50'
-                    }`}
+                      }`}
                   >
                     {page}
                   </button>
                 );
               })}
-              
+
               <button
                 onClick={() => setCurrentPage(currentPage + 1)}
                 disabled={currentPage === totalPages}
@@ -202,7 +244,7 @@ const AdminDashboard = () => {
       <div className="bg-white shadow rounded-lg overflow-hidden">
         <div className="px-4 lg:px-6 py-4 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <h3 className="text-lg font-medium text-gray-900">All News</h3>
-          <button 
+          <button
             onClick={() => navigate('/admin/create-news')}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm w-full sm:w-auto"
           >
@@ -223,8 +265,18 @@ const AdminDashboard = () => {
                       {new Date(article.publishDate).toLocaleDateString()}
                     </span>
                     <div className="flex gap-3 flex-shrink-0">
-                      <button className="text-blue-600 hover:text-blue-900 text-sm">Edit</button>
-                      <button className="text-red-600 hover:text-red-900 text-sm">Delete</button>
+                      <button
+                        onClick={() => handleEditNews(article._id)}
+                        className="text-blue-600 hover:text-blue-900 text-sm"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDeleteNews(article._id)}
+                        className="text-red-600 hover:text-red-900 text-sm"
+                      >
+                        Delete
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -253,21 +305,19 @@ const AdminDashboard = () => {
         <div className="flex border-t">
           <button
             onClick={() => setActiveTab('jobs')}
-            className={`flex-1 py-3 text-sm font-medium transition-colors ${
-              activeTab === 'jobs'
+            className={`flex-1 py-3 text-sm font-medium transition-colors ${activeTab === 'jobs'
                 ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-700'
                 : 'text-gray-600 hover:bg-gray-50'
-            }`}
+              }`}
           >
             📋 Jobs
           </button>
           <button
             onClick={() => setActiveTab('news')}
-            className={`flex-1 py-3 text-sm font-medium transition-colors ${
-              activeTab === 'news'
+            className={`flex-1 py-3 text-sm font-medium transition-colors ${activeTab === 'news'
                 ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-700'
                 : 'text-gray-600 hover:bg-gray-50'
-            }`}
+              }`}
           >
             📰 News
           </button>
@@ -282,25 +332,34 @@ const AdminDashboard = () => {
           </div>
           <nav className="mt-6">
             <button
-              onClick={() => setActiveTab('jobs')}
-              className={`w-full text-left px-6 py-3 text-sm font-medium transition-colors ${
-                activeTab === 'jobs'
+              onClick={() => navigate('/')}
+              className={`w-full text-left px-6 py-3 text-sm font-medium transition-colors ${activeTab === ''
                   ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700'
                   : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-              }`}
+                }`}
+            >
+              Go to Home 🏠
+            </button>
+
+            <button
+              onClick={() => setActiveTab('jobs')}
+              className={`w-full text-left px-6 py-3 text-sm font-medium transition-colors ${activeTab === 'jobs'
+                  ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700'
+                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                }`}
             >
               📋 Jobs Management
             </button>
             <button
               onClick={() => setActiveTab('news')}
-              className={`w-full text-left px-6 py-3 text-sm font-medium transition-colors ${
-                activeTab === 'news'
+              className={`w-full text-left px-6 py-3 text-sm font-medium transition-colors ${activeTab === 'news'
                   ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700'
                   : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-              }`}
+                }`}
             >
               📰 News Management
             </button>
+
           </nav>
         </div>
 

@@ -44,7 +44,7 @@ const JobCard = ({ job }) => {
         <button 
           onClick={(e) => {
             e.stopPropagation();
-            // window.open(job.applyLink, '_blank');
+            window.open(job.applyLink, '_blank');
           }}
           className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700"
         >
