@@ -65,8 +65,8 @@ const Navbar = () => {
               <li><NavLink to='/' className={navLinkClass} onClick={() => setIsMenuOpen(false)}>Home</NavLink></li>
               <li><NavLink to='/jobs' className={navLinkClass} onClick={() => setIsMenuOpen(false)}>Jobs</NavLink></li>
               <li><NavLink to='/news' className={navLinkClass} onClick={() => setIsMenuOpen(false)}>News</NavLink></li>
-              <li className="cursor-pointer hover:text-blue-600 py-2">Resources</li>
-              <li className="cursor-pointer hover:text-blue-600 py-2">Contact</li>
+              {/* <li className="cursor-pointer hover:text-blue-600 py-2">Resources</li>
+              <li className="cursor-pointer hover:text-blue-600 py-2">Contact</li> */}
               {admin && (
                 <li><NavLink to='/admin/dashboard' className={navLinkClass} onClick={() => setIsMenuOpen(false)}>🏛️ Dashboard</NavLink></li>
               )}
