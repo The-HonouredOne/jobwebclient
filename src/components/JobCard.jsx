@@ -21,12 +21,6 @@ const JobCard = ({ job }) => {
           <h3 className="text-base lg:text-lg font-semibold truncate">{job.title}</h3>
           <p className="text-gray-500 text-sm truncate">{job.department}</p>
         </div>
-
-        <span className={`px-2 py-1 rounded text-xs ${
-          job.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-        }`}>
-          {job.status}
-        </span>
       </div>
 
       <div className="flex flex-wrap gap-2 lg:gap-4 text-xs lg:text-sm text-gray-600 mt-2">

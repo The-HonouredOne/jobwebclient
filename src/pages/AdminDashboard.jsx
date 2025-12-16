@@ -96,22 +96,14 @@ const AdminDashboard = () => {
 
   const renderJobsContent = () => (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6 mb-6 lg:mb-8">
         <div className="bg-white p-6 rounded-lg shadow">
           <h3 className="text-lg font-medium text-gray-900">Total Jobs</h3>
           <p className="text-3xl font-bold text-blue-600">{totalJobs}</p>
         </div>
         <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-medium text-gray-900">Active Jobs</h3>
-          <p className="text-3xl font-bold text-green-600">
-            {jobs.filter(job => job.status === 'Active').length}
-          </p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-medium text-gray-900">Expired Jobs</h3>
-          <p className="text-3xl font-bold text-red-600">
-            {jobs.filter(job => job.status === 'Expired').length}
-          </p>
+          <h3 className="text-lg font-medium text-gray-900">Published Jobs</h3>
+          <p className="text-3xl font-bold text-green-600">{jobs.length}</p>
         </div>
       </div>
 
@@ -136,7 +128,6 @@ const AdminDashboard = () => {
                   <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase hidden sm:table-cell">Department</th>
                   <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase hidden md:table-cell">Category</th>
                   <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Vacancies</th>
-                  <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
                   <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                 </tr>
               </thead>
@@ -154,14 +145,6 @@ const AdminDashboard = () => {
                     </td>
                     <td className="px-3 lg:px-6 py-4 text-sm text-gray-500">
                       {job.totalVacancies}
-                    </td>
-                    <td className="px-3 lg:px-6 py-4">
-                      <span className={`px-2 py-1 text-xs rounded-full ${job.status === 'Active'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-red-100 text-red-800'
-                        }`}>
-                        {job.status}
-                      </span>
                     </td>
                     <td className="px-3 lg:px-6 py-4 text-xs font-medium">
                       <div className="flex flex-col lg:flex-row gap-1 lg:gap-3">
