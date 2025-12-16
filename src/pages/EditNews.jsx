@@ -29,8 +29,8 @@ const EditNews = () => {
     const fetchData = async () => {
       try {
         const [newsResponse, jobsResponse] = await Promise.all([
-          axios.get(`http://localhost:8080/api/news/${id}`),
-          axios.get('http://localhost:8080/api/jobs')
+          axios.get(`https://jobwebserver.onrender.com/api/news/${id}`),
+          axios.get('https://jobwebserver.onrender.com/api/jobs')
         ]);
 
         const news = newsResponse.data.data?.news;
@@ -72,7 +72,7 @@ const EditNews = () => {
         ...formData,
         relatedJob: formData.relatedJob || null
       };
-      await axios.put(`http://localhost:8080/api/news/${id}`, submitData);
+      await axios.put(`https://jobwebserver.onrender.com/api/news/${id}`, submitData);
       navigate('/admin/dashboard');
     } catch (error) {
       console.error('Error updating news:', error);

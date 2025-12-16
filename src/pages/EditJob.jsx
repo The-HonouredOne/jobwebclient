@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import STATES from '../data/states';
 
 const EditJob = () => {
   const { admin, loading: authLoading } = useAuth();
@@ -11,6 +12,7 @@ const EditJob = () => {
   const [formData, setFormData] = useState({
     title: '',
     department: '',
+    state: '',
     category: 'Central Govt',
     qualification: '',
     totalVacancies: '',
@@ -32,12 +34,13 @@ const EditJob = () => {
 
     const fetchJob = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/jobs/${id}`);
+        const response = await axios.get(`https://jobwebserver.onrender.com/api/jobs/${id}`);
         const job = response.data.data?.job;
         if (job) {
           setFormData({
             title: job.title || '',
             department: job.department || '',
+            state: job.state || '',
             category: job.category || 'Central Govt',
             qualification: job.qualification || '',
             totalVacancies: job.totalVacancies || '',
@@ -84,7 +87,7 @@ const EditJob = () => {
     setLoading(true);
 
     try {
-      await axios.put(`http://localhost:8080/api/jobs/${id}`, formData);
+      await axios.put(`https://jobwebserver.onrender.com/api/jobs/${id}`, formData);
       navigate('/admin/dashboard');
     } catch (error) {
       console.error('Error updating job:', error);
@@ -142,6 +145,22 @@ const EditJob = () => {
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">State / Region</label>
+                <select
+                  name="state"
+                  required
+                  value={formData.state}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Select State</option>
+                  {STATES.map(s => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
               </div>
 
               <div>

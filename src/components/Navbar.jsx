@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
   const { admin } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate=useNavigate()
 
   const navLinkClass = ({ isActive }) => 
     `cursor-pointer transition-colors block py-2 ${
@@ -17,7 +18,8 @@ const Navbar = () => {
     <nav className="w-full border-b bg-white">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between py-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 cursor-pointer"
+          onClick={()=>navigate("/")}>
             <span className="text-2xl">🏛️</span>
             <div>
               <h1 className="font-semibold text-lg">GovJobs</h1>

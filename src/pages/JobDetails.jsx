@@ -13,7 +13,7 @@ const JobDetails = () => {
     const fetchJob = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/jobs/${id}`
+          `https://jobwebserver.onrender.com/api/jobs/${id}`
         );
         setJob(res.data.data?.job);
       } catch (err) {
@@ -57,6 +57,7 @@ const JobDetails = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
               <p><strong>Category:</strong> {job.category}</p>
+              <p><strong>State:</strong> {job.state}</p>
               <p><strong>Qualification:</strong> {job.qualification}</p>
               <p><strong>Total Vacancies:</strong> {job.totalVacancies}</p>
               <p><strong>Application Mode:</strong> {job.applicationMode}</p>

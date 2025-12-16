@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import STATES from '../data/states';
 
 const CreateJob = () => {
   const { admin, loading: authLoading } = useAuth();
@@ -10,6 +11,7 @@ const CreateJob = () => {
   const [formData, setFormData] = useState({
     title: '',
     department: '',
+    state: '',
     category: 'Central Govt',
     qualification: '',
     totalVacancies: '',
@@ -47,7 +49,7 @@ const CreateJob = () => {
     setLoading(true);
 
     try {
-      await axios.post('http://localhost:8080/api/jobs', formData);
+      await axios.post('https://jobwebserver.onrender.com/api/jobs', formData);
       navigate('/admin/dashboard');
     } catch (error) {
       console.error('Error creating job:', error);
@@ -108,6 +110,22 @@ const CreateJob = () => {
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">State / Region</label>
+                <select
+                  name="state"
+                  required
+                  value={formData.state}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Select State</option>
+                  {STATES.map(s => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
               </div>
 
               <div>

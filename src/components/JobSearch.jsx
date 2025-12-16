@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import STATES from '../data/states';
 
 const JobSearch = () => {
   const navigate = useNavigate();
@@ -52,16 +53,9 @@ const JobSearch = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">All States</option>
-              <option value="Delhi">Delhi</option>
-              <option value="Maharashtra">Maharashtra</option>
-              <option value="Karnataka">Karnataka</option>
-              <option value="Tamil Nadu">Tamil Nadu</option>
-              <option value="Gujarat">Gujarat</option>
-              <option value="Rajasthan">Rajasthan</option>
-              <option value="Uttar Pradesh">Uttar Pradesh</option>
-              <option value="West Bengal">West Bengal</option>
-              <option value="Madhya Pradesh">Madhya Pradesh</option>
-              <option value="Bihar">Bihar</option>
+              {STATES.map(s => (
+                <option key={s} value={s}>{s}</option>
+              ))}
             </select>
           </div>
 
