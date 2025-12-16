@@ -13,7 +13,7 @@ const JobDetails = () => {
     const fetchJob = async () => {
       try {
         const res = await axios.get(
-          `https://jobwebserver.onrender.com/api/jobs/${id}`
+          `http://localhost:8080/api/jobs/${id}`
         );
         setJob(res.data.data?.job);
       } catch (err) {

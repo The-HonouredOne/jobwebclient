@@ -34,7 +34,7 @@ const EditJob = () => {
 
     const fetchJob = async () => {
       try {
-        const response = await axios.get(`https://jobwebserver.onrender.com/api/jobs/${id}`);
+        const response = await axios.get(`http://localhost:8080/api/jobs/${id}`);
         const job = response.data.data?.job;
         if (job) {
           setFormData({
@@ -87,7 +87,7 @@ const EditJob = () => {
     setLoading(true);
 
     try {
-      await axios.put(`https://jobwebserver.onrender.com/api/jobs/${id}`, formData);
+      await axios.put(`http://localhost:8080/api/jobs/${id}`, formData);
       navigate('/admin/dashboard');
     } catch (error) {
       console.error('Error updating job:', error);

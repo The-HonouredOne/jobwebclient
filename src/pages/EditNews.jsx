@@ -19,6 +19,9 @@ const EditNews = () => {
     officialLink: '',
     status: 'Published'
   });
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [currentImage, setCurrentImage] = useState(null);
 
   useEffect(() => {
     if (!admin) {
@@ -29,8 +32,8 @@ const EditNews = () => {
     const fetchData = async () => {
       try {
         const [newsResponse, jobsResponse] = await Promise.all([
-          axios.get(`https://jobwebserver.onrender.com/api/news/${id}`),
-          axios.get('https://jobwebserver.onrender.com/api/jobs')
+          axios.get(`http://localhost:8080/api/news/${id}`),
+          axios.get('http://localhost:8080/api/jobs')
         ]);
 
         const news = newsResponse.data.data?.news;
@@ -45,6 +48,7 @@ const EditNews = () => {
             officialLink: news.officialLink || '',
             status: news.status || 'Published'
           });
+          setCurrentImage(news.image || null);
         }
 
         const jobsData = Array.isArray(jobsResponse.data.data?.jobs) ? jobsResponse.data.data.jobs : [];
@@ -63,16 +67,31 @@ const EditNews = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => setImagePreview(reader.result);
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const submitData = {
-        ...formData,
-        relatedJob: formData.relatedJob || null
-      };
-      await axios.put(`https://jobwebserver.onrender.com/api/news/${id}`, submitData);
+      const submitData = new FormData();
+      Object.keys(formData).forEach(key => {
+        if (formData[key]) submitData.append(key, formData[key]);
+      });
+      if (!formData.relatedJob) submitData.append('relatedJob', '');
+      if (imageFile) submitData.append('image', imageFile);
+
+      await axios.put(`http://localhost:8080/api/news/${id}`, submitData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
       navigate('/admin/dashboard');
     } catch (error) {
       console.error('Error updating news:', error);
@@ -189,6 +208,28 @@ const EditNews = () => {
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Image (Optional)</label>
+                {currentImage && !imagePreview && (
+                  <div className="mb-2">
+                    <p className="text-sm text-gray-600 mb-1">Current image:</p>
+                    <img src={currentImage} alt="Current" className="h-32 w-auto rounded-md" />
+                  </div>
+                )}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                {imagePreview && (
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-600 mb-1">New image preview:</p>
+                    <img src={imagePreview} alt="Preview" className="h-32 w-auto rounded-md" />
+                  </div>
+                )}
               </div>
             </div>
 

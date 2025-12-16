@@ -18,11 +18,13 @@ const CreateNews = () => {
     officialLink: '',
     status: 'Published'
   });
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('https://jobwebserver.onrender.com/api/jobs');
+        const response = await axios.get('http://localhost:8080/api/jobs');
         setJobs(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         console.error('Error fetching jobs:', error);
@@ -39,17 +41,32 @@ const CreateNews = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => setImagePreview(reader.result);
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const submitData = {
-        ...formData,
-        relatedJob: formData.relatedJob || null,
-        postedBy: admin.id
-      };
-      await axios.post('https://jobwebserver.onrender.com/api/news', submitData);
+      const submitData = new FormData();
+      Object.keys(formData).forEach(key => {
+        if (formData[key]) submitData.append(key, formData[key]);
+      });
+      if (!formData.relatedJob) submitData.append('relatedJob', '');
+      submitData.append('postedBy', admin.id);
+      if (imageFile) submitData.append('image', imageFile);
+
+      await axios.post('http://localhost:8080/api/news', submitData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
       navigate('/admin/dashboard');
     } catch (error) {
       console.error('Error creating news:', error);
@@ -169,6 +186,21 @@ const CreateNews = () => {
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Image (Optional)</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                {imagePreview && (
+                  <div className="mt-2">
+                    <img src={imagePreview} alt="Preview" className="h-32 w-auto rounded-md" />
+                  </div>
+                )}
               </div>
             </div>
 

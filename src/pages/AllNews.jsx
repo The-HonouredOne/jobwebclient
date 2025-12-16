@@ -21,7 +21,7 @@ const AllNews = () => {
         if (filter) params.type = filter;
 
         const response = await axios.get(
-          "https://jobwebserver.onrender.com/api/news",
+          "http://localhost:8080/api/news",
           { params }
         );
 
@@ -109,6 +109,7 @@ const AllNews = () => {
                 date={new Date(article.publishDate).toLocaleDateString()}
                 title={article.title}
                 description={article.shortDescription}
+                image={article.image}
               />
             ))}
           </div>

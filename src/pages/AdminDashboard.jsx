@@ -26,8 +26,8 @@ const AdminDashboard = () => {
     const fetchData = async () => {
       try {
         const [jobsResponse, newsResponse] = await Promise.all([
-          axios.get(`https://jobwebserver.onrender.com/api/jobs?page=${currentPage}&limit=10`),
-          axios.get('https://jobwebserver.onrender.com/api/news').catch(() => ({ data: [] }))
+          axios.get(`http://localhost:8080/api/jobs?page=${currentPage}&limit=10`),
+          axios.get('http://localhost:8080/api/news').catch(() => ({ data: [] }))
         ]);
         setJobs(Array.isArray(jobsResponse.data.data?.jobs) ? jobsResponse.data.data.jobs : []);
         setTotalPages(jobsResponse.data.totalPages || 1);
@@ -53,7 +53,7 @@ const AdminDashboard = () => {
   const handleDeleteJob = async (jobId) => {
     if (window.confirm('Are you sure you want to delete this job?')) {
       try {
-        await axios.delete(`https://jobwebserver.onrender.com/api/jobs/${jobId}`);
+        await axios.delete(`http://localhost:8080/api/jobs/${jobId}`);
         setJobs(jobs.filter(job => job._id !== jobId));
         setTotalJobs(totalJobs - 1);
       } catch (error) {
@@ -66,7 +66,7 @@ const AdminDashboard = () => {
   const handleDeleteNews = async (newsId) => {
     if (window.confirm('Are you sure you want to delete this news?')) {
       try {
-        await axios.delete(`https://jobwebserver.onrender.com/api/news/${newsId}`);
+        await axios.delete(`http://localhost:8080/api/news/${newsId}`);
         setNews(news.filter(article => article._id !== newsId));
         setTotalNews(totalNews - 1);
       } catch (error) {

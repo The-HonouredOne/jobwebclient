@@ -12,8 +12,8 @@ const FeaturedSection = () => {
     const fetchData = async () => {
       try {
         const [jobsResponse, newsResponse] = await Promise.all([
-          axios.get('https://jobwebserver.onrender.com/api/jobs'),
-          axios.get('https://jobwebserver.onrender.com/api/news').catch(() => ({ data: { data: { news: [] } } }))
+          axios.get('http://localhost:8080/api/jobs'),
+          axios.get('http://localhost:8080/api/news').catch(() => ({ data: { data: { news: [] } } }))
         ]);
         
         const jobsData = Array.isArray(jobsResponse.data.data?.jobs) ? jobsResponse.data.data.jobs : [];
