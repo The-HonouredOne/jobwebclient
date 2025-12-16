@@ -65,12 +65,12 @@ const Footer = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink
+                {/* <NavLink
                   to="/privacy-policy"
                   className="hover:text-white transition-colors"
                 >
                   Privacy Policy
-                </NavLink>
+                </NavLink> */}
               </li>
             </ul>
           </div>
