@@ -101,10 +101,10 @@ const AdminDashboard = () => {
           <h3 className="text-lg font-medium text-gray-900">Total Jobs</h3>
           <p className="text-3xl font-bold text-blue-600">{totalJobs}</p>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
+        {/* <div className="bg-white p-6 rounded-lg shadow">
           <h3 className="text-lg font-medium text-gray-900">Published Jobs</h3>
           <p className="text-3xl font-bold text-green-600">{jobs.length}</p>
-        </div>
+        </div> */}
       </div>
 
       <div className="bg-white shadow rounded-lg">
@@ -218,10 +218,10 @@ const AdminDashboard = () => {
           <h3 className="text-lg font-medium text-gray-900">Total News</h3>
           <p className="text-3xl font-bold text-blue-600">{totalNews}</p>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
+        {/* <div className="bg-white p-6 rounded-lg shadow">
           <h3 className="text-lg font-medium text-gray-900">Published Today</h3>
           <p className="text-3xl font-bold text-green-600">0</p>
-        </div>
+        </div> */}
       </div>
 
       <div className="bg-white shadow rounded-lg overflow-hidden">
