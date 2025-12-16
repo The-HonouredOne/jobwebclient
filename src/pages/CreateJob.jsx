@@ -49,7 +49,7 @@ const CreateJob = () => {
     setLoading(true);
 
     try {
-      await axios.post('http://localhost:8080/api/jobs', formData);
+      await axios.post('https://jobwebserver.onrender.com/api/jobs', formData);
       navigate('/admin/dashboard');
     } catch (error) {
       console.error('Error creating job:', error);

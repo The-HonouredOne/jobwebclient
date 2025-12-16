@@ -24,7 +24,7 @@ const CreateNews = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/jobs');
+        const response = await axios.get('https://jobwebserver.onrender.com/api/jobs');
         setJobs(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         console.error('Error fetching jobs:', error);
@@ -64,7 +64,7 @@ const CreateNews = () => {
       submitData.append('postedBy', admin.id);
       if (imageFile) submitData.append('image', imageFile);
 
-      await axios.post('http://localhost:8080/api/news', submitData, {
+      await axios.post('https://jobwebserver.onrender.com/api/news', submitData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       navigate('/admin/dashboard');

@@ -27,7 +27,7 @@ const AllJobs = () => {
         if (urlParams.get("category")) params.category = urlParams.get("category");
 
         const response = await axios.get(
-          "http://localhost:8080/api/jobs",
+          "https://jobwebserver.onrender.com/api/jobs",
           { params }
         );
 

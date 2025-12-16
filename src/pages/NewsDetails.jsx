@@ -12,7 +12,7 @@ const NewsDetails = () => {
     const fetchNews = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8080/api/news/${id}`
+          `https://jobwebserver.onrender.com/api/news/${id}`
         );
         setNews(res.data.data?.news);
       } catch (err) {

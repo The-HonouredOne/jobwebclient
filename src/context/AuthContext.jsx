@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/admin/login', {
+      const response = await axios.post('https://jobwebserver.onrender.com/api/admin/login', {
         email,
         password
       });

@@ -21,7 +21,7 @@ const AllNews = () => {
         if (filter) params.type = filter;
 
         const response = await axios.get(
-          "http://localhost:8080/api/news",
+          "https://jobwebserver.onrender.com/api/news",
           { params }
         );
 

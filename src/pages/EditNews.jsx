@@ -32,8 +32,8 @@ const EditNews = () => {
     const fetchData = async () => {
       try {
         const [newsResponse, jobsResponse] = await Promise.all([
-          axios.get(`http://localhost:8080/api/news/${id}`),
-          axios.get('http://localhost:8080/api/jobs')
+          axios.get(`https://jobwebserver.onrender.com/api/news/${id}`),
+          axios.get('https://jobwebserver.onrender.com/api/jobs')
         ]);
 
         const news = newsResponse.data.data?.news;
@@ -89,7 +89,7 @@ const EditNews = () => {
       if (!formData.relatedJob) submitData.append('relatedJob', '');
       if (imageFile) submitData.append('image', imageFile);
 
-      await axios.put(`http://localhost:8080/api/news/${id}`, submitData, {
+      await axios.put(`https://jobwebserver.onrender.com/api/news/${id}`, submitData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       navigate('/admin/dashboard');

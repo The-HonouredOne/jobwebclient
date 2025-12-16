@@ -8,7 +8,7 @@ const FeaturedStory = () => {
   useEffect(() => {
     const fetchFeaturedNews = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/news');
+        const response = await axios.get('https://jobwebserver.onrender.com/api/news');
         const newsData = response.data.data?.news || [];
         if (newsData.length > 0) {
           setFeaturedNews(newsData[0]); // Get the latest news as featured
