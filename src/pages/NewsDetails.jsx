@@ -55,9 +55,6 @@ const NewsDetails = () => {
                 <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">
                   {news.type}
                 </span>
-                <span className="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full">
-                  {news.status}
-                </span>
               </div>
 
               <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
